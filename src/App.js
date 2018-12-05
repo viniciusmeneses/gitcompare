@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 // import styled from 'styled-components';
 
+import Main from './pages/Main';
+
 // Importando o estilo global criado
 import GlobalStyle from './styles/global';
 
@@ -22,11 +24,10 @@ const App = () => (
   <Fragment>
     {/* Utilizando o estilo global importado para que funcione */}
     <GlobalStyle />
+    {/* Utilizando o styled-component criado */}
+    {/* <Title>Hello World!</Title> */}
 
-    <div className="App">
-      {/* Utilizando o styled-component criado */}
-      {/* <Title>Hello World!</Title> */}
-    </div>
+    <Main />
   </Fragment>
 );
 
