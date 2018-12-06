@@ -1,5 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
+// Importando o font-awesome globalmente
+import 'font-awesome/css/font-awesome.css';
+
 // Para criar uma estilização global, devemos utilizar o crateGlobalStyle
 // Passando o CSS que queremos exportar
 const GlobalStyle = createGlobalStyle`

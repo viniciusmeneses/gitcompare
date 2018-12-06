@@ -10,6 +10,7 @@ import { Container, Form } from './styles';
 
 export default class Main extends Component {
   state = {
+    loading: false,
     repositoryInput: '',
     repositoryError: false,
     repositories: [],
@@ -17,6 +18,8 @@ export default class Main extends Component {
 
   handleAddRepository = async (e) => {
     e.preventDefault();
+
+    this.setState({ loading: true });
 
     try {
       const { repositoryInput, repositories } = this.state;
@@ -41,11 +44,15 @@ export default class Main extends Component {
       });
     } catch (err) {
       this.setState({ repositoryError: true });
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
   render() {
-    const { repositories, repositoryInput, repositoryError } = this.state;
+    const {
+      repositories, repositoryInput, repositoryError, loading,
+    } = this.state;
     return (
       <Container>
         <img src={logo} alt="GitCompare" />
@@ -58,7 +65,7 @@ export default class Main extends Component {
             value={repositoryInput}
             onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
-          <button type="submit">OK</button>
+          <button type="submit">{loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}</button>
         </Form>
 
         <CompareList repositories={repositories} />
