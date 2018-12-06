@@ -13,8 +13,8 @@ export const Form = styled.form`
   max-width: 400px;
   display: flex;
 
-  // Referenciando elementos filhos dentro de um styled-component
-  // Como se fosse SASS
+  /* Referenciando elementos filhos dentro de um styled-component
+  Como se fosse SASS */
   input {
     flex: 1;
     height: 55px;
@@ -24,6 +24,10 @@ export const Form = styled.form`
     font-size: 18px;
     color: #444;
     border-radius: 3px;
+
+    /* Acessando uma propriedade passada (withError) e verificando seu valor
+    para aplicar a borda */
+    border: ${props => (props.withError ? '2px solid #f00' : 0)};
   }
 
   button {
@@ -38,7 +42,7 @@ export const Form = styled.form`
     border-radius: 3px;
     transition: all 0.3s ease;
 
-    // Referenciando o proprio elemento dentro dele com &
+    /* Referenciando o proprio elemento dentro dele com & */
     &:hover {
       background: #56bca4;
     }

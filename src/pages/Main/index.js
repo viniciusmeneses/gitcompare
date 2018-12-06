@@ -11,6 +11,7 @@ import { Container, Form } from './styles';
 export default class Main extends Component {
   state = {
     repositoryInput: '',
+    repositoryError: false,
     repositories: [],
   };
 
@@ -35,18 +36,22 @@ export default class Main extends Component {
       // vindo do response.data
       this.setState({
         repositoryInput: '',
+        repositoryError: false,
         repositories: [...repositories, repository],
       });
-    } catch (err) {}
+    } catch (err) {
+      this.setState({ repositoryError: true });
+    }
   };
 
   render() {
-    const { repositories, repositoryInput } = this.state;
+    const { repositories, repositoryInput, repositoryError } = this.state;
     return (
       <Container>
         <img src={logo} alt="GitCompare" />
 
-        <Form onSubmit={this.handleAddRepository}>
+        {/* Podemos passar para um styled-components, propriedades que serao acessiveis */}
+        <Form withError={repositoryError} onSubmit={this.handleAddRepository}>
           <input
             type="text"
             placeholder="usuário/repositório"
