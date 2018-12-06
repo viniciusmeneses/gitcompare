@@ -16,6 +16,14 @@ export default class Main extends Component {
     repositories: [],
   };
 
+  componentDidMount() {
+    this.loadRepositories();
+  }
+
+  loadRepositories = () => {
+    this.setState({ repositories: this.getReposStorage() });
+  };
+
   handleAddRepository = async (e) => {
     e.preventDefault();
 
@@ -33,6 +41,9 @@ export default class Main extends Component {
       // quanto tempo atras ocorreu
       repository.lastCommit = moment(repository.pushed_at).fromNow();
 
+      // Adicionando o repositorio buscado ao storage
+      this.setRepoStorage(repository);
+
       // Setando o estado limpando o input e adicionando o repositorio buscado a lista
       // Como o estado nao muda (imutavel), criamos um novo array
       // passando os elementos ja existentes no repositories e adicionando o outro elemento
@@ -43,10 +54,19 @@ export default class Main extends Component {
         repositories: [...repositories, repository],
       });
     } catch (err) {
+      console.log(err);
       this.setState({ repositoryError: true });
     } finally {
       this.setState({ loading: false });
     }
+  };
+
+  getReposStorage = () => JSON.parse(localStorage.getItem('GitCompare:repositories')) || [];
+
+  setRepoStorage = (repository) => {
+    const repositories = this.getReposStorage();
+    repositories.push(repository);
+    localStorage.setItem('GitCompare:repositories', JSON.stringify(repositories));
   };
 
   render() {
