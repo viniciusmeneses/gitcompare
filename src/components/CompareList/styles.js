@@ -3,16 +3,19 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
   justify-content: center;
 
-  margin-top: 50px;
+  margin: 40px 0;
 `;
 
 export const Repository = styled.div`
   width: 250px;
   background: #fff;
   border-radius: 3px;
-  margin: 0 10px;
+  margin: 10px 10px;
+  color: #262626;
 
   display: flex;
   flex-direction: column;
@@ -33,7 +36,7 @@ export const Repository = styled.div`
 
     small {
       font-size: 14px;
-      color: #666;
+      color: #b2b2b2;
     }
   }
 
@@ -47,7 +50,7 @@ export const Repository = styled.div`
       small {
         font-weight: normal;
         font-size: 12px;
-        color: #999;
+        color: #9e9e9e;
         font-style: italic;
       }
 

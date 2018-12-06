@@ -27,7 +27,7 @@ export const Form = styled.form`
 
     /* Acessando uma propriedade passada (withError) e verificando seu valor
     para aplicar a borda */
-    border: ${props => (props.withError ? '2px solid #f00' : 0)};
+    border: ${props => (props.withError ? '2px solid #f26060' : 0)};
   }
 
   button {
