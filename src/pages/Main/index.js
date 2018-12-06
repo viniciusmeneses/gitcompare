@@ -20,18 +20,21 @@ export default class Main extends Component {
     this.loadRepositories();
   }
 
-  loadRepositories = () => {
-    this.setState({ repositories: this.getReposStorage() });
+  loadRepositories = (repositories = this.getReposStorage()) => {
+    this.setState({ repositories });
   };
 
   handleAddRepository = async (e) => {
     e.preventDefault();
-
+    const { repositoryInput } = this.state;
     this.setState({ loading: true });
+    await this.fetchRepository(repositoryInput);
+    this.setState({ loading: false });
+  };
 
+  fetchRepository = async (name) => {
     try {
-      const { repositoryInput, repositories } = this.state;
-      const { data: repository } = await api.get(`repos/${repositoryInput}`);
+      const { data: repository } = await api.get(`repos/${name}`);
 
       // SEMPRE FORMATAR OS DADOS ANTES DE CHEGAR NO METODO RENDER/STATE
       // PARA QUE A FORMATACAO NAO SEJA EXECUTADA TODA VEZ QUE O RENDER
@@ -41,8 +44,10 @@ export default class Main extends Component {
       // quanto tempo atras ocorreu
       repository.lastCommit = moment(repository.pushed_at).fromNow();
 
+      this.removeRepoStorage(repository.id);
+
       // Adicionando o repositorio buscado ao storage
-      this.setRepoStorage(repository);
+      this.addRepoStorage(repository);
 
       // Setando o estado limpando o input e adicionando o repositorio buscado a lista
       // Como o estado nao muda (imutavel), criamos um novo array
@@ -51,22 +56,30 @@ export default class Main extends Component {
       this.setState({
         repositoryInput: '',
         repositoryError: false,
-        repositories: [...repositories, repository],
       });
     } catch (err) {
-      console.log(err);
       this.setState({ repositoryError: true });
-    } finally {
-      this.setState({ loading: false });
     }
   };
 
+  setReposStorage = repositories => localStorage.setItem('GitCompare:repositories', JSON.stringify(repositories));
+
   getReposStorage = () => JSON.parse(localStorage.getItem('GitCompare:repositories')) || [];
 
-  setRepoStorage = (repository) => {
-    const repositories = this.getReposStorage();
-    repositories.push(repository);
-    localStorage.setItem('GitCompare:repositories', JSON.stringify(repositories));
+  addRepoStorage = (repository) => {
+    const newRepositories = this.getReposStorage();
+    newRepositories.push(repository);
+    this.setAndUpdateRepos(newRepositories);
+  };
+
+  removeRepoStorage = (repositoryId) => {
+    const newRepositories = this.getReposStorage().filter(repo => repo.id !== repositoryId);
+    this.setAndUpdateRepos(newRepositories);
+  };
+
+  setAndUpdateRepos = (repositories) => {
+    this.setReposStorage(repositories);
+    this.loadRepositories(repositories);
   };
 
   render() {
@@ -88,7 +101,11 @@ export default class Main extends Component {
           <button type="submit">{loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}</button>
         </Form>
 
-        <CompareList repositories={repositories} />
+        <CompareList
+          repositories={repositories}
+          onDelete={this.removeRepoStorage}
+          onRefresh={this.fetchRepository}
+        />
       </Container>
     );
   }

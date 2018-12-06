@@ -6,7 +6,6 @@ export const Container = styled.div`
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-
   margin: 40px 0;
 `;
 
@@ -16,9 +15,14 @@ export const Repository = styled.div`
   border-radius: 3px;
   margin: 10px 10px;
   color: #262626;
-
+  position: relative;
   display: flex;
   flex-direction: column;
+  transition: all 0.5s ease;
+
+  &:hover {
+    filter: grayscale(100%) opacity(90%);
+  }
 
   header {
     padding: 30px;
@@ -58,5 +62,25 @@ export const Repository = styled.div`
         background: #f5f5f5;
       }
     }
+  }
+
+  button {
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #353535;
+  }
+
+  button.delete {
+    margin: 2px 5px 0 0;
+    font-size: 20px;
+  }
+
+  button.refresh {
+    margin: 5px 25px 0 0;
+    font-size: 16px;
   }
 `;
