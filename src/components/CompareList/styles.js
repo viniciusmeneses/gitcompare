@@ -72,6 +72,7 @@ export const Repository = styled.div`
     top: 0;
     right: 0;
     color: #353535;
+    cursor: pointer;
   }
 
   button.delete {

@@ -27,9 +27,12 @@ export default class Main extends Component {
   handleAddRepository = async (e) => {
     e.preventDefault();
     const { repositoryInput } = this.state;
-    this.setState({ loading: true });
-    await this.fetchRepository(repositoryInput);
-    this.setState({ loading: false });
+
+    if (repositoryInput) {
+      this.setState({ loading: true });
+      await this.fetchRepository(repositoryInput);
+      this.setState({ loading: false });
+    }
   };
 
   fetchRepository = async (name) => {
@@ -91,7 +94,11 @@ export default class Main extends Component {
         <img src={logo} alt="GitCompare" />
 
         {/* Podemos passar para um styled-components, propriedades que serao acessiveis */}
-        <Form withError={repositoryError} onSubmit={this.handleAddRepository}>
+        <Form
+          withError={repositoryError}
+          isDisabled={!repositoryInput}
+          onSubmit={this.handleAddRepository}
+        >
           <input
             type="text"
             placeholder="usuário/repositório"

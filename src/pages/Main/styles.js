@@ -35,17 +35,18 @@ export const Form = styled.form`
     height: 55px;
     padding: 0 20px;
     margin-left: 10px;
-    background: #5fceb4;
+    background: ${props => (props.isDisabled ? '#f26060' : '#5fceb4')};
     color: #fff;
     border: 0;
     font-size: 20px;
     font-weight: bold;
     border-radius: 3px;
     transition: all 0.3s ease;
+    cursor: ${props => (props.isDisabled ? 'not-allowed' : 'pointer')};
 
     /* Referenciando o proprio elemento dentro dele com & */
     &:hover {
-      background: #56bca4;
+      background: ${props => (props.isDisabled ? '#dc5858' : '#56bca4')};
     }
   }
 `;
