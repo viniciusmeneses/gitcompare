@@ -4,13 +4,14 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 80px;
 `;
 
 export const Form = styled.form`
   margin-top: 20px;
-  width: 100%;
+  padding: 0 10px;
   max-width: 400px;
+  width: 100%;
   display: flex;
 
   /* Referenciando elementos filhos dentro de um styled-component

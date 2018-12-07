@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import GithubCorner from 'react-github-corner';
 import api from '../../services/api';
 
 import CompareList from '../../components/CompareList';
@@ -113,6 +114,8 @@ export default class Main extends Component {
           onDelete={this.removeRepoStorage}
           onRefresh={this.fetchRepository}
         />
+
+        <GithubCorner href="https://github.com/viniciusmeneses/gitcompare" />
       </Container>
     );
   }
