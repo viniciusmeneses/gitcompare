@@ -102,7 +102,7 @@ export default class Main extends Component {
         >
           <input
             type="text"
-            placeholder="usuário/repositório"
+            placeholder="user/repository"
             value={repositoryInput}
             onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
